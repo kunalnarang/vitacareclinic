@@ -254,7 +254,8 @@ input:focus, textarea:focus, select:focus {
 .slider1__img-01,
 .slider1__img-about,
 .slider1__img-physicians,
-.slider1__img-contact {
+.slider1__img-contact,
+.slider1__img-book {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -263,6 +264,7 @@ input:focus, textarea:focus, select:focus {
 .slider1__img-about { background-image: url("../img/about-hero.jpg"); }
 .slider1__img-physicians { background-image: url("../img/physicians-hero.jpg"); }
 .slider1__img-contact { background-image: url("../img/contact-hero.jpg"); }
+.slider1__img-book { background-image: url("../img/book-hero.jpg"); }
 .slider1__height { height: 800px; }
 .slider1__height--page { height: 440px; }
 .d-flex { display: flex !important; }
