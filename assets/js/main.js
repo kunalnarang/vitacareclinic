@@ -4,7 +4,7 @@
 // replace the placeholder string below. Every element with
 // [data-booking] across all pages will update automatically.
 // =====================================================================
-const BOOKING_URL = "#booking-coming-soon";
+const BOOKING_URL = "book.html";
 
 (function () {
   // 1) Wire all booking CTAs
