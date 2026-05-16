@@ -70,4 +70,25 @@ const BOOKING_URL = "book.html";
   document.querySelectorAll("[data-year]").forEach((el) => {
     el.textContent = String(new Date().getFullYear());
   });
+
+  // 6) Prefetch internal pages on hover/touch so navigation feels instant
+  const prefetched = new Set();
+  const prefetchPage = (href) => {
+    if (!href || prefetched.has(href)) return;
+    if (href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:") || href.startsWith("javascript:")) return;
+    let url;
+    try { url = new URL(href, window.location.href); } catch { return; }
+    if (url.origin !== window.location.origin) return;
+    if (url.pathname === window.location.pathname) return;
+    prefetched.add(href);
+    const link = document.createElement("link");
+    link.rel = "prefetch";
+    link.href = url.pathname + url.search;
+    link.as = "document";
+    document.head.appendChild(link);
+  };
+  document.querySelectorAll("a[href]").forEach((a) => {
+    a.addEventListener("mouseenter", () => prefetchPage(a.getAttribute("href")), { passive: true });
+    a.addEventListener("touchstart", () => prefetchPage(a.getAttribute("href")), { passive: true });
+  });
 })();
