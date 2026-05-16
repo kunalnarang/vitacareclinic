@@ -110,10 +110,10 @@
             <input type="hidden" name="subject" value="New enquiry from VitaCare website" />
             <input type="hidden" name="from_name" value="VitaCare Clinic Website" />
             <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
-            <input name="fullname" type="text" placeholder="Your full name*" class="contact-input" required />
+            <input name="fullname" type="text" placeholder="Your full name*" class="contact-input" required minlength="2" />
             <div class="grid sm:grid-cols-2 gap-4">
-              <input name="email" type="email" placeholder="Mail Address*" class="contact-input" required />
-              <input name="phone" type="tel" placeholder="Phone Number*" class="contact-input" required />
+              <input name="email" type="email" placeholder="Mail Address*" class="contact-input" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address (e.g. name@example.com)" />
+              <input name="phone" type="tel" placeholder="Phone Number*" class="contact-input" required pattern="^[+]?[\s\d().\-]{10,20}$" title="Please enter a valid phone number (at least 10 digits, e.g. (780) 616-1000)" inputmode="tel" />
             </div>
             <textarea name="message" rows="6" placeholder="Your Message" class="contact-input" required></textarea>
             <button type="submit" class="btn btn-primary w-full text-base py-4">Send Message</button>
@@ -124,8 +124,27 @@
               var form = document.getElementById('contact-form');
               var status = document.getElementById('contact-form-status');
               var btn = form.querySelector('button[type="submit"]');
+              function showError(msg){
+                status.classList.remove('hidden','text-teal','text-ink-soft');
+                status.classList.add('text-red-600');
+                status.textContent = msg;
+              }
               form.addEventListener('submit', function(e){
                 e.preventDefault();
+                var emailVal = form.email.value.trim();
+                var phoneVal = form.phone.value.trim();
+                var emailRe = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+                if (!emailRe.test(emailVal)) {
+                  showError('Please enter a valid email address (e.g. name@example.com).');
+                  form.email.focus();
+                  return;
+                }
+                var phoneDigits = phoneVal.replace(/\D/g, '');
+                if (phoneDigits.length < 10 || phoneDigits.length > 15) {
+                  showError('Please enter a valid phone number with at least 10 digits.');
+                  form.phone.focus();
+                  return;
+                }
                 status.classList.remove('hidden','text-teal','text-red-600');
                 status.classList.add('text-ink-soft');
                 status.textContent = 'Sending…';
